@@ -1,0 +1,45 @@
+-- create patients table
+CREATE TABLE Patients (
+    patientID INT PRIMARY KEY,
+    firstName varChar (30),
+    lastName varChar (30)
+);
+
+--define phone number type to hold multiple phone numbers 
+CREATE TYPE phone IS VARRAY (3) of char(10);
+
+--define adress type to hold all part of address
+CREATE TYPE address AS OBJECT (
+    street VarChar (40),
+    city VarChar(20),
+    StateCode Char(2),
+    ZIP INT
+);
+
+--create contace information table
+CREATE TABLE ContactInfo(
+    patientID INT FOREIGN KEY REFERENCES Patients (patientID)
+  	ON DELETE SET NULL,
+    phoneNum phone,
+    email VarChar (30),
+    homeAddress address
+);
+
+--constraint to ensure each patient has their own ID 
+ALTER TABLE patients ADD CONSTRAINT uniqueID UNIQUE (patientID);
+
+--insert data into patients table
+INSERT INTO Patients VALUES (001, 'Karen','Smith');
+INSERT INTO Patients VALUES (002, 'William','Scott');
+INSERT INTO Patients VALUES (003, 'Bobby','Johnson');
+
+--insert data into contact table
+INSERT INTO ContactInfo VALUES (001, phone (5176789025), 'ksmith@gmail.com',
+                                address('10 Maple rd','Howell','MI',48843))
+INSERT INTO ContactInfo VALUES (002, phone (8107652983,9897651029), 		                                 'wscott@gmail.com',address('60 State 		                                  St','New York','NY',09876));
+INSERT INTO ContactInfo VALUES (001, phone 	                              (8762987654,8027389186,8915267386),
+                                'bjohnson@gmail.com',
+                                address('10 Maple rd','Howell','MI',48843));
+                                
+ --delete ksmith@gmail.com from contact info
+ DELETE FROM ContactInfo WHERE email='ksmith@gmail.com';

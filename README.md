@@ -1,4 +1,4 @@
-**Project Title **Healthcare Information System: Patient Contact Info
+**Project Title** Healthcare Information System: Patient Contact Info
 
 **Description** This SQl code creates tables for patient names and their contact infromation. Example patient data is inserted and deleted.
 
